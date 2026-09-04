@@ -2,27 +2,38 @@ name: GitHub Actions Security Analysis with zizmor 🌈
 
 on:
     push:
-        branches: ["main"]
+        branches:
+            - main
     pull_request:
-        branches: ["**"]
+        branches:
+            - main
 
+    workflow_dispatch:
+
+    schedule:
+        - cron: "0 23 * * 5" #UTC
 permissions: {}
 
 jobs:
     zizmor:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         permissions:
-            security-events: write
+            security-events: write # for actions/security-events
+            contents: read #for actions/checkout
+
+        # avoids wasting runners on obsolete PR commits.
         concurrency:
             group: zizmor-workflow-${{ github.event.pull_request.number || github.ref }}
+            cancel-in-progress: true # cancel an older scan when a newer commit arrives.
 
         steps:
             - name: Checkout repository
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
               with:
-                  persist-credentials: false
+                  persist-credentials: false # prevents actions/checkout from leaving the GitHub token persisted in the local Git config
 
             - name: Run zizmor
               uses: zizmorcore/zizmor-action@3dc1ecc9bcb9e94e9b2c709687979e1298497054 # v0.6.2
               with:
                   inputs: .github/workflows
+                  persona: pedantic
