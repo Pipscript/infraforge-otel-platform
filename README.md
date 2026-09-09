@@ -2,7 +2,9 @@
 
 ## Overview
 
-This project deploys the OpenTelemetry Demo as a production-style microservices platform on Amazon Web Services (AWS).
+This repository contains end-to-end DevOps implementation of the OpenTelemetry Astronomy Shop, a microservice-based distributed system intended to illustrate the implementation of OpenTelemetry in a near real-world environment.
+
+![Opentelemetry Astronomy Shop](Screenshot (593).png)
 
 The platform uses Amazon Elastic Kubernetes Service (EKS) to run the application. Terraform creates and manages the AWS infrastructure. Docker builds the application images. Amazon Elastic Container Registry (ECR) stores the images.
 
