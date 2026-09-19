@@ -1,0 +1,31 @@
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  # General hygiene
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
+      - id: no-commit-to-branch
+        args: ["--branch", "main", "--branch", "master"]
+
+  # Semgrep for polyglot SAST (fast subset of rules)
+  # Uses a local hook (pip install from PyPI) instead of the semgrep/semgrep
+  # repo hook, which requires cloning their full source monorepo (400MB+)
+  # just to read a tiny hooks manifest — slow and prone to network resets.
+  - repo: https://github.com/semgrep/pre-commit
+    rev: "v1.177.0"
+    hooks:
+      - id: semgrep
+        args: ["--config", "p/default", "--error", "--skip-unknown-extensions"]
