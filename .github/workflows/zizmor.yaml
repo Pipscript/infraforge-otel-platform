@@ -10,9 +10,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - ".github/**.yml"
-      - ".github/**.yaml"
   schedule:
     - cron: "0 23 * * 5" # Fridays 23:00 UTC
   workflow_dispatch:
