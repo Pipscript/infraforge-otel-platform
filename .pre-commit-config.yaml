@@ -21,10 +21,6 @@ repos:
       - id: no-commit-to-branch
         args: ["--branch", "main", "--branch", "master"]
 
-  # Semgrep for polyglot SAST (fast subset of rules)
-  # Uses a local hook (pip install from PyPI) instead of the semgrep/semgrep
-  # repo hook, which requires cloning their full source monorepo (400MB+)
-  # just to read a tiny hooks manifest — slow and prone to network resets.
   - repo: https://github.com/semgrep/pre-commit
     rev: "v1.177.0"
     hooks:
